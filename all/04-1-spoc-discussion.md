@@ -18,30 +18,54 @@ re_os_lab, v9_cpu, os_course_spoc_exercises 　in github repos。这样可以在
 ## 视频相关思考题
 ### 8.1 虚拟存储的需求背景
 
-1. 寄存器、高速缓存、内存、外存的访问特征？
+1. 寄存器、高速缓存、内存、外存的访问特征？  
+  
+- 访问速度依次下降，访问频率依次下降，访问空间依次变大。
 
-2. 如何理解计算机中的存储层次结构所的理想状态是“均衡繁忙”状态？
+2. 如何理解计算机中的存储层次结构所的理想状态是“均衡繁忙”状态？  
+  
+- 指各层次都繁忙，即利用率很高，但均不构成瓶颈。
 
-3. 在你写程序时遇到过内存不够的情况吗？尝试过什么解决方法？
+3. 在你写程序时遇到过内存不够的情况吗？尝试过什么解决方法？  
+  
+- 可以及时释放不需要的内存，或者将某些部分用文件储存。
 
 ### 8.2 覆盖和交换
 
-1. 什么是覆盖技术？使用覆盖技术的程序开发者的主要工作是什么？
+1. 什么是覆盖技术？使用覆盖技术的程序开发者的主要工作是什么？  
+  
+- 划分程序逻辑块，将不会同时用到的部分分配一块内存。程序员需要划分模块和确定模块之间的关系。
 
-2. 什么是交换技术？覆盖与交换有什么不同？
+2. 什么是交换技术？覆盖与交换有什么不同？  
+  
+- 交换是将内存中整个进程换入和换出。覆盖是程序切块，交换的单位是逻辑块，而交换是针对进程。
 
-3. 覆盖和交换技术在现代计算机系统中还有需要吗？可能用在什么地方？
 
-4. 如何分析内核模块间的依赖关系？
+3. 覆盖和交换技术在现代计算机系统中还有需要吗？可能用在什么地方？  
+  
+- 交换是需要的，但是覆盖实现过于复杂，可能的使用场景是程序员手工对程序进行覆盖优化。
 
-5. 如何获取内核模块间的函数调用列表？
+4. 如何分析内核模块间的依赖关系？  
+  
+- 利用函数的调用关系，以及控制流分析和数据流分析等手段。
+
+5. 如何获取内核模块间的函数调用列表？  
+  
+- 通过对内核源码分析，或者动态追踪栈中的数据。
 
 
 ### 8.3 局部性原理
 
-1. 什么是时间局部性、空间局部性和分支局部性？
+1. 什么是时间局部性、空间局部性和分支局部性？  
+  
+- 时间局部性：一段代码或数据在一段时间内可能多次访问。  
+- 空间局部性：被访问数据的相邻数据更可能被访问。  
+- 分支局部性：一个分支语句更可能有相同的跳转结果。
 
-2. 如何提高程序执行时的局部性特征？
+
+2. 如何提高程序执行时的局部性特征？  
+  
+- 注意连续访存。
 
 
 
@@ -50,26 +74,38 @@ re_os_lab, v9_cpu, os_course_spoc_exercises 　in github repos。这样可以在
 
 ### 8.4 虚拟存储概念
 
-1. 什么是虚拟存储？它与覆盖和交换的区别是什么？它有什么好处和挑战？
+1. 什么是虚拟存储？它与覆盖和交换的区别是什么？它有什么好处和挑战？  
+- 面对应用程序的虚拟的很大的内存，实际是将某些部分放在外存中，其使得应用程序编写更简单，但是实现比较复杂。
 
-2. 虚拟存储需要什么样的支持技术？
+2. 虚拟存储需要什么样的支持技术？  
+- 地址转换和置换算法。
 
 
 ### 8.5 虚拟页式存储
 
- 1. 什么是虚拟页式存储？缺页中断处理的功能是什么？
+1. 什么是虚拟页式存储？缺页中断处理的功能是什么？  
+- 以页为单位进行内外存交换，将某个页从外存移到内存。
 
- 1. 为了支持虚拟页式存储的实现，页表项有什么修改？
+1. 为了支持虚拟页式存储的实现，页表项有什么修改？  
+  
+- 需要有标志位，有驻留、保护、修改、访问等。
 
 
- 2. 页式存储和虚拟页式存储的区别是什么？
+2. 页式存储和虚拟页式存储的区别是什么？  
+  
+- 前者是对物理内存进行分页，物理内存大小决定了页的数量。  
+- 后者是对虚拟内存进行分页，页的数量与物理内存大小无关。  
 
 ### 8.6 缺页异常
 
-1. 缺页异常的处理流程？
+1. 缺页异常的处理流程？  
+  
+- 触发缺页异常 -> 在外存找到相应页 -> 换入 -> 修改页表 -> 返回程序。
 
 
-2. 虚拟页式存储管理中有效存储访问时间是如何计算的？
+2. 虚拟页式存储管理中有效存储访问时间是如何计算的？  
+  
+- 设缺页率为p，则时间为 访存时间 *（1-p）+ 处理缺页时间 * p。
 
 
 ## 个人思考题
@@ -83,12 +119,12 @@ re_os_lab, v9_cpu, os_course_spoc_exercises 　in github repos。这样可以在
 #define COUNT 10
 int A[NUM][NUM];
 void main (void) {
-  int i,j,k;
-  for (k = 0; k<COUNT; k++)
-  for (i = 0; i < NUM; i++)
-  for (j = 0; j	 < NUM; j++)
-      A[i][j] = i+j;
-  printf("%d count computing over!\n",i*j*k);
+      int i,j,k;
+        for (k = 0; k<COUNT; k++)
+              for (i = 0; i < NUM; i++)
+                    for (j = 0; j    < NUM; j++)
+                              A[i][j] = i+j;
+                                printf("%d count computing over!\n",i*j*k);
 }
 ```
 可以用下的命令来编译和运行此程序：
@@ -119,72 +155,72 @@ PTEs）大小为1 Byte，1个页目录表大小为32 Bytes，1个页表大小为
 PTE格式（8 bit） :
 ```
   VALID | PFN6 ... PFN0
-```
-PDE格式（8 bit） :
-```
-  VALID | PT6 ... PT0
-```
-其
-```
-VALID==1表示，表示映射存在；VALID==0表示，表示内存映射不存在（有两种情况：a.对应的物理页帧swap out在硬盘上；b.既没有在内存中，页没有在硬盘上，这时页帧号为0x7F）。
-PFN6..0:页帧号或外存中的后备页号
-PT6..0:页表的物理基址>>5
-```
+  ```
+  PDE格式（8 bit） :
+  ```
+    VALID | PT6 ... PT0
+    ```
+    其
+    ```
+    VALID==1表示，表示映射存在；VALID==0表示，表示内存映射不存在（有两种情况：a.对应的物理页帧swap out在硬盘上；b.既没有在内存中，页没有在硬盘上，这时页帧号为0x7F）。
+    PFN6..0:页帧号或外存中的后备页号
+    PT6..0:页表的物理基址>>5
+    ```
 
-已经建立好了1个页目录表和8个页表，且页目录表的index为0~7的页目录项分别对应了这8个页表。
+    已经建立好了1个页目录表和8个页表，且页目录表的index为0~7的页目录项分别对应了这8个页表。
 
-在[物理内存模拟数据文件](./04-1-spoc-memdiskdata.md)中，给出了4KB物理内存空间和4KBdisk空间的值，PDBR的值。
+    在[物理内存模拟数据文件](./04-1-spoc-memdiskdata.md)中，给出了4KB物理内存空间和4KBdisk空间的值，PDBR的值。
 
-请手工计算后回答下列虚地址是否有合法对应的物理内存，请给出对应的pde index, pde contents, pte index, pte contents，the value of addr in phy page OR disk sector。
-```
-1) Virtual Address 6653:
-2) Virtual Address 1c13:
-3) Virtual Address 6890:
-4) Virtual Address 0af6:
-5) Virtual Address 1e6f:
-```
+    请手工计算后回答下列虚地址是否有合法对应的物理内存，请给出对应的pde index, pde contents, pte index, pte contents，the value of addr in phy page OR disk sector。
+    ```
+    1) Virtual Address 6653:
+    2) Virtual Address 1c13:
+    3) Virtual Address 6890:
+    4) Virtual Address 0af6:
+    5) Virtual Address 1e6f:
+    ```
 
-请写出一个translation程序（可基于python、ruby、C、C++、LISP、JavaScript等），输入是一个虚拟地址，依据[物理内存模拟数据文件](./04-1-spoc-memdiskdata.md)自动计算出对应的pde index, pde contents, pte index, pte contents，the value of addr in phy page OR disk sector。
+    请写出一个translation程序（可基于python、ruby、C、C++、LISP、JavaScript等），输入是一个虚拟地址，依据[物理内存模拟数据文件](./04-1-spoc-memdiskdata.md)自动计算出对应的pde index, pde contents, pte index, pte contents，the value of addr in phy page OR disk sector。
 
-**提示:**
-```
-页大小（page size）为32 Bytes(2^5)
-页表项1B
+    **提示:**
+    ```
+    页大小（page size）为32 Bytes(2^5)
+    页表项1B
 
-8KB的虚拟地址空间(2^13)
-一级页表：2^5
-PDBR content: 0xd80（1101_100 0_0000, page 0x6c）
+    8KB的虚拟地址空间(2^13)
+    一级页表：2^5
+    PDBR content: 0xd80（1101_100 0_0000, page 0x6c）
 
-page 6c: e1(1110 0001) b5(1011 0101) a1(1010 0001) c1(1100 0001)
-         b3(1011 0011) e4(1110 0100) a6(1010 0110) bd(1011 1101)
-二级页表：2^5
-页内偏移：2^5
+    page 6c: e1(1110 0001) b5(1011 0101) a1(1010 0001) c1(1100 0001)
+             b3(1011 0011) e4(1110 0100) a6(1010 0110) bd(1011 1101)
+             二级页表：2^5
+             页内偏移：2^5
 
-4KB的物理内存空间（physical memory）(2^12)
-物理帧号：2^7
+     4KB的物理内存空间（physical memory）(2^12)
+     物理帧号：2^7
 
-Virtual Address 0330(0 00000 11001 1_0000):
-  --> pde index:0x0(00000)  pde contents:(0xe1, 11100001, valid 1, pfn 0x61(page 0x61))
-  page 6c: e1 b5 a1 c1 b3 e4 a6 bd 7f 7f 7f 7f 7f 7f 7f 7f
-           7f 7f 7f 7f 7f 7f 7f 7f 7f 7f 7f 7f 7f 7f 7f 7f
-  page 61: 7c 7f 7f 4e 4a 7f 3b 5a 2a be 7f 6d 7f 66 7f a7
-           69 96 7f c8 3a 7f a5 83 07 e3 7f 37 62 30 7f 3f
-    --> pte index:0x19(11001)  pte contents:(0xe3, 1 110_0011, valid 1, pfn 0x63)
-  page 63: 16 00 0d 15 00 1c 1d 16 02 02 0b 00 0a 00 1e 19
-           02 1b 06 06 14 1d 03 00 0b 00 12 1a 05 03 0a 1d
-      --> To Physical Address 0xc70(110001110000, 0xc70) --> Value: 02
+     Virtual Address 0330(0 00000 11001 1_0000):
+       --> pde index:0x0(00000)  pde contents:(0xe1, 11100001, valid 1, pfn 0x61(page 0x61))
+      page 6c: e1 b5 a1 c1 b3 e4 a6 bd 7f 7f 7f 7f 7f 7f 7f 7f
+               7f 7f 7f 7f 7f 7f 7f 7f 7f 7f 7f 7f 7f 7f 7f 7f
+      page 61: 7c 7f 7f 4e 4a 7f 3b 5a 2a be 7f 6d 7f 66 7f a7
+               69 96 7f c8 3a 7f a5 83 07 e3 7f 37 62 30 7f 3f
+                 --> pte index:0x19(11001)  pte contents:(0xe3, 1 110_0011, valid 1, pfn 0x63)
+      page 63: 16 00 0d 15 00 1c 1d 16 02 02 0b 00 0a 00 1e 19
+               02 1b 06 06 14 1d 03 00 0b 00 12 1a 05 03 0a 1d
+                 --> To Physical Address 0xc70(110001110000, 0xc70) --> Value: 02
 
-Virtual Address 1e6f(0 001_11 10_011 0_1111):
-  --> pde index:0x7(00111)  pde contents:(0xbd, 10111101, valid 1, pfn 0x3d)
-  page 6c: e1 b5 a1 c1 b3 e4 a6 bd 7f 7f 7f 7f 7f 7f 7f 7f
-           7f 7f 7f 7f 7f 7f 7f 7f 7f 7f 7f 7f 7f 7f 7f 7f
-  page 3d: f6 7f 5d 4d 7f 04 29 7f 1e 7f ef 51 0c 1c 7f 7f
-           7f 76 d1 16 7f 17 ab 55 9a 65 ba 7f 7f 0b 7f 7f
-    --> pte index:0x13  pte contents:(0x16, valid 0, pfn 0x16)
-  disk 16: 00 0a 15 1a 03 00 09 13 1c 0a 18 03 13 07 17 1c
-           0d 15 0a 1a 0c 12 1e 11 0e 02 1d 10 15 14 07 13
-      --> To Disk Sector Address 0x2cf(0001011001111) --> Value: 1c
-```
+    Virtual Address 1e6f(0 001_11 10_011 0_1111):
+      --> pde index:0x7(00111)  pde contents:(0xbd, 10111101, valid 1, pfn 0x3d)
+     page 6c: e1 b5 a1 c1 b3 e4 a6 bd 7f 7f 7f 7f 7f 7f 7f 7f
+              7f 7f 7f 7f 7f 7f 7f 7f 7f 7f 7f 7f 7f 7f 7f 7f
+     page 3d: f6 7f 5d 4d 7f 04 29 7f 1e 7f ef 51 0c 1c 7f 7f
+              7f 76 d1 16 7f 17 ab 55 9a 65 ba 7f 7f 0b 7f 7f
+                --> pte index:0x13  pte contents:(0x16, valid 0, pfn 0x16)
+     disk 16: 00 0a 15 1a 03 00 09 13 1c 0a 18 03 13 07 17 1c
+              0d 15 0a 1a 0c 12 1e 11 0e 02 1d 10 15 14 07 13
+                --> To Disk Sector Address 0x2cf(0001011001111) --> Value: 1c
+    ```
 
 ## 扩展思考题
 ---
